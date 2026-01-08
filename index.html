@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard Deteksi Sampah Bawah Laut</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f8;
+}
+
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background-color: #1f2937;
+    color: white;
+    position: fixed;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.sidebar a:hover {
+    background-color: #374151;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 700px;
+}
+
+/* ===== STATS ===== */
+.stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background: #111827;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    width: 150px;
+    text-align: center;
+}
+
+.stat-box h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #9ca3af;
+}
+
+.stat-box p {
+    margin: 5px 0 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ===== VIDEO ===== */
+.video-wrapper {
+    position: relative;
+    width: 640px;
+    margin-bottom: 15px;
+}
+
+video {
+    width: 100%;
+    border-radius: 10px;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+/* ===== UPLOAD ===== */
+#uploadCanvas {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* ===== BUTTON ===== */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+}
+
+button.stop {
+    background: #dc2626;
+    margin-left: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>Deteksi Sampah</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Dataset</a>
+    <a href="#">Training</a>
+    <a href="#">Evaluasi</a>
+</div>
+
+<div class="content">
+    <h1>Dashboard Deteksi Sampah Bawah Laut</h1>
+
+    <div class="card">
+
+        <div class="stats">
+            <div class="stat-box"><h3>Total</h3><p id="total">0</p></div>
+            <div class="stat-box"><h3>Jenis</h3><p id="jenis">-</p></div>
+            <div class="stat-box"><h3>Confidence</h3><p id="conf">-</p></div>
+            <div class="stat-box"><h3>FPS</h3><p id="fps">0</p></div>
+        </div>
+
+        <div class="video-wrapper">
+            <video id="video" autoplay muted playsinline></video>
+            <canvas id="overlay"></canvas>
+        </div>
+
+        <button onclick="startCamera()">Start Kamera</button>
+        <button class="stop" onclick="stopCamera()">Stop Kamera</button>
+
+        <hr style="margin:20px 0">
+
+       <h3>Deteksi dari Gambar</h3>
+
+<form id="uploadForm">
+    <input type="file" id="imageInput" accept="image/*" required>
+    <button type="submit">Deteksi Gambar</button>
+    <button type="button" id="clearImage" style="display:none; background:#dc2626;">
+        ❌ Hapus Gambar
+    </button>
+</form>
+
+<canvas id="uploadCanvas"></canvas>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+</body>
+</html>
